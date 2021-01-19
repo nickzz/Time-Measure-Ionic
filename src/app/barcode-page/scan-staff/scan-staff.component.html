@@ -1,0 +1,27 @@
+<ion-card style="border-radius: 12px">
+  <ion-card-content>
+    <ion-grid>
+      <ion-row style="padding-bottom: 20px">
+        <ion-col class="justify-align-center">
+          <ion-text>Please scan your identification barcode. </ion-text>
+          <img
+            style="border-radius: 4px; padding-top: 20px"
+            src="assets/scan2.png"
+          />
+        </ion-col>
+      </ion-row>
+      <ion-button color="primary" expand="full" (click)="scan()">
+        Scan code</ion-button
+      >
+    </ion-grid>
+    <ion-item *ngIf="data">
+      <ion-label position="stacked">Scan Format</ion-label>
+      <ion-input [value]="data.format" readonly></ion-input>
+    </ion-item>
+    <ion-item *ngIf="data">
+      <ion-label position="stacked">Scan Information</ion-label>
+      <ion-input [value]="data.text" readonly></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+

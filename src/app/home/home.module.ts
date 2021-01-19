@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
+import { ScanStaffComponent } from './../barcode-page/scan-staff/scan-staff.component';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
 
 @NgModule({
   imports: [
-    CommonModule,
+  CommonModule,
     FormsModule,
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,ScanStaffComponent]
 })
 export class HomePageModule {}
