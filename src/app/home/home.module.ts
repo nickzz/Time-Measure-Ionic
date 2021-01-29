@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-import { ScanStaffComponent } from './../barcode-page/scan-staff/scan-staff.component';
-
 import { HomePageRoutingModule } from './home-routing.module';
+import { ScanProductComponent } from '../barcode-page/scan-product/scan-product.component';
 
 
 @NgModule({
@@ -15,6 +14,6 @@ import { HomePageRoutingModule } from './home-routing.module';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage,ScanStaffComponent]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

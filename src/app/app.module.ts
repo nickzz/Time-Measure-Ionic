@@ -10,15 +10,22 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HttpClient} from '@angular/common/http';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { CommonModule } from '@angular/common';
+import { ScanStaffComponent } from './barcode-page/scan-staff/scan-staff.component';
+import { ApiService } from './api.service';
+import { Toast } from '@ionic-native/toast/ngx';
+import { ScanProductComponent } from './barcode-page/scan-product/scan-product.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,ScanStaffComponent,ScanProductComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,CommonModule],
+providers: [
     StatusBar,
     SplashScreen,
     BarcodeScanner,
+    ApiService,
+    Toast,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
