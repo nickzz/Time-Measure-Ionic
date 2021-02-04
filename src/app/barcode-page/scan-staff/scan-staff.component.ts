@@ -122,4 +122,8 @@ export class ScanStaffComponent implements OnInit {
     this.navCtrl.navigateForward('home');
   }
 
+  gotonextpage(){
+    this.router.navigate(['other']);
+  }
+
 }

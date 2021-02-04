@@ -13,15 +13,17 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ScanStaffComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
 
   providers: [

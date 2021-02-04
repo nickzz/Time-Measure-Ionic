@@ -10,6 +10,19 @@
           />
         </ion-col>
       </ion-row>
+      <ion-row style="padding-bottom: 20px">
+        <ion-col class="justify-align-center">
+          <ion-list inset>
+            <ion-item *ngFor="let testings of testing">
+              <h2>{{ testings.M_MATERIALNO }}</h2>
+            <br/><br/>
+              <p>{{ testings.M_MODELNAME }}</p>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      
       <ion-button color="primary" expand="full" (click)="scan()">
         Scan code</ion-button>
       <!-- <ion-button expand="full" (click)="getDataEverywhere()">Get Data</ion-button>
@@ -40,17 +53,10 @@
       <ion-input [value]="data.text" readonly></ion-input>
     </ion-item>
 
-    <ion-list inset>
-      <ion-item *ngFor="let testings of testing">
-        <h2>{{ testings.M_MATERIALNO }}</h2>
-        <p>{{ testings.M_MODELNAME }}</p>
-      </ion-item>
-    </ion-list>
-
   </ion-card-content>
 
   <ion-card-content style="border-radius: 12px">
-     <ion-button expand="full">Next</ion-button>
+     <ion-button expand="full" >Next</ion-button>
   </ion-card-content>
 
 
