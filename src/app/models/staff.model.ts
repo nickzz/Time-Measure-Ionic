@@ -1,4 +1,4 @@
-export class Staff {
+export class Worker {
 
     empNo: string;
     empName: string;

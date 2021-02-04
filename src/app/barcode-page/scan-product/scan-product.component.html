@@ -7,39 +7,38 @@
         </ion-title>
       </ion-col>
       <ion-col>
-        <ion-icon name="contact" slot="start"></ion-icon>
+        <ion-icon name="person" slot="start"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <ion-card style="border: grey thick;border-radius: 6px;">
+  <ion-card style="border: grey thick; border-radius: 6px">
     <ion-card-header>
       <ion-title style="text-align: center">Staff Information</ion-title>
     </ion-card-header>
     <ion-card-content>
       <ion-row>
-        <ion-text>Staff Name : </ion-text>
+        <ion-text>Staff Name : {{ details.empName }}</ion-text>
       </ion-row>
       <ion-row>
-        <ion-text>Staff Code :</ion-text>
+        <ion-text>Staff Code : {{ details.empNo }}</ion-text>
       </ion-row>
     </ion-card-content>
-  </ion-card> -->
+  </ion-card>
 
   <ion-grid>
-    <ion-row style="padding-bottom: 14px;padding-top: 12px;">
+    <ion-row style="padding-bottom: 14px; padding-top: 12px">
       <ion-col>
-        <img
-          style="border-radius: 8px"
-          src="assets/scan1.png"/>
+        <img style="border-radius: 8px" src="assets/scan1.png" />
       </ion-col>
       <ion-col>
         <ion-button color="success" expand="block" (click)="scan()">
           Scan barcode
           <ion-icon name="scan-sharp" slot="start"></ion-icon>
         </ion-button>
+        <ion-button [routerLink]="['/products']"> Add Product </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -47,7 +46,9 @@
   <ion-grid>
     <ion-row style="padding-bottom: 10%">
       <ion-col style="text-align: center">
-        <ion-title style="padding-bottom: 8px;">Product Barcode Scanner</ion-title>
+        <ion-title style="padding-bottom: 8px"
+          >Product Barcode Scanner</ion-title
+        >
         <ion-text
           >Click on button above to start scanning the product barcode.
         </ion-text>
@@ -55,29 +56,31 @@
     </ion-row>
   </ion-grid>
 
-  <ion-card style="border: grey thick;border-radius: 6px;padding-top: 12px;">
+  <ion-card style="border: grey thick; border-radius: 6px; padding-top: 12px">
     <ion-card-content>
       <ion-item>
         <ion-label>Station</ion-label>
-        <ion-select interface="popover">
-          <ion-select-option value="nes">1</ion-select-option>
-          <ion-select-option value="n64">2</ion-select-option>
-          <ion-select-option value="ps">3</ion-select-option>
-          <ion-select-option value="genesis">4</ion-select-option>
-          <ion-select-option value="saturn">5</ion-select-option>
-          <ion-select-option value="snes">6</ion-select-option>
+        <ion-select interface="popover" [(ngModel)]="product.station">
+          <ion-select-option value="1">1</ion-select-option>
+          <ion-select-option value="2">2</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+          <ion-select-option value="4">4</ion-select-option>
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="6">6</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item *ngIf="data">
+
+      <ion-item style="justify-content: space-between;">
+        <!-- *ngIf="data" -->
         <ion-label>Barcode </ion-label>
-        <ion-input [value]="data.text" readonly></ion-input>
+        <ion-input [value]="data" [(ngModel)]="product.barcode"></ion-input>
       </ion-item>
-  
+
       <ion-grid>
         <ion-row>
           <ion-col></ion-col>
           <ion-col size="6">
-            <ion-button color="primary" style="padding-top: 8px" expand="full">
+            <ion-button color="primary" style="padding-top: 8px" expand="full" (click)="submitForm()">
               Submit</ion-button
             >
           </ion-col>

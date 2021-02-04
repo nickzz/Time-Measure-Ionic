@@ -11,29 +11,29 @@ import { catchError, tap, map } from "rxjs/operators";
   providedIn: "root",
 })
 export class ApiService {
-
   httpOptions = {
-    headers: new HttpHeaders({ "Content-Type": "application/json" }),
+    headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
-  
-  apiUrl = " http://localhost:80/api"
-  
+
+  apiUrl = " http://localhost:80/api";
+
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error("An error occurred:", error.error.message);
     } else {
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      );
+      console.error({
+        "Backend returned code: ": error.status,
+        "body was: ": error.error,
+      });
     }
     return throwError("Something bad happened; please try again later.");
   }
 
   private extractData(res: Response) {
     let body = res;
-    return body || {};
+    return body || [];
   }
 
   getDataUser(): Observable<any> {
@@ -44,53 +44,51 @@ export class ApiService {
 
   //Staff
 
+  // getAll(): Observable<any> {
+  //   return this.http
+  //     .get(this.apiUrl + "/staffs", this.httpOptions)
+  //     .pipe(map(this.extractData), catchError(this.handleError));
+  // }
+
   getAll(): Observable<any> {
-    return this.http.get(this.apiUrl, this.httpOptions).pipe(
-      map(this.extractData),
-      catchError(this.handleError));
+    return this.http
+      .get(this.apiUrl + "/staffs", this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
-  // getAll(): Observable<Staff[]> {
-  //   return this.http
-  //     .get<Staff[]>(this.apiUrl + "/staffs")
-  //     .pipe(catchError(this.handleError));
+  // getStaff(empNo: string): Observable<any> {
+  //   const url = `${this.apiUrl}/check-staff/${empNo}`;
+  //   return this.http.get(url, this.httpOptions);
+  //   // .pipe(
+  //   //   map(this.extractData),
+  //   //   catchError(this.handleError));
   // }
 
-  getStaff(empNo: string): Observable<any> {
+  getStaff(empNo:string): Observable<any> {
     const url = `${this.apiUrl}/check-staff/${empNo}`;
-    return this.http.get(url, this.httpOptions)
-    .pipe(
-      map(this.extractData));
-    //   catchError(this.handleError));
+    return this.http
+      .get<any>(url, this.httpOptions);
   }
-
-  // getStaff(empNo): Observable<any> {
-  //   return this.http
-  //     .get(this.apiUrl + "/check-staff/" + empNo);
-  // }
 
   createStaff(data): Observable<any> {
     const url = `${this.apiUrl}/add_with_staff`;
-    return this.http.post(url, data, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http
+      .post(url, data, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
-  
+
   updateStaff(empNo: string, data): Observable<any> {
     const url = `${this.apiUrl}/${empNo}`;
-    return this.http.put(url, data, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http
+      .put(url, data, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
-  
+
   deleteStaff(empNo: string): Observable<{}> {
     const url = `${this.apiUrl}/${empNo}`;
-    return this.http.delete(url, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http
+      .delete(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   // create(staff:Staff): Observable<Staff> {
@@ -119,4 +117,17 @@ export class ApiService {
 
   //     .pipe(catchError(this.handleError));
   // }
+
+  addProduct(data): Observable<any> {
+    const url = `${this.apiUrl}/staff/scans`;
+    return this.http
+      .post(url, data, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getProducts(): Observable<any> {
+    return this.http
+      .get(this.apiUrl + "/staff/scans", this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
 }

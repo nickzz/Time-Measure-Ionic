@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title> Roland Time Measure </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-margin">
+  <ion-title style="font-family: Arial;font-size: 20px;padding-top: 10px;padding-bottom: 10px;"><strong>Product Scan List</strong></ion-title>
+  <ion-card *ngFor="let x of product">
+    <ion-card-content>
+      <ion-row style="justify-content: space-between;">
+        <ion-text>Barcode: {{ x.BARCODE }}</ion-text>
+        <ion-text>Station: {{ x.STATION }}</ion-text>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
