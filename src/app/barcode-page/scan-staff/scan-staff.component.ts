@@ -15,9 +15,9 @@ import { Toast } from "@ionic-native/toast/ngx";
 })
 export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedProduct: any;
-  staffs: Worker[] = [];
+  staffs: any;
   backButtonSubscription;
-  empno:any;
+  empno: any;
 
   constructor(
     private barcodeScanner: BarcodeScanner,
@@ -26,44 +26,22 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
     private toast: Toast,
     private apiService: ApiService,
     public loadingController: LoadingController
-  ) {}
-
-  ngOnInit() {
-    // this.apiService
-    //   .getAll()
-    //   .pipe()
-    //   .subscribe((response) => {
-    //     this.staffs = response;
-    //     console.log(this.staffs);
-    //   });
+  ) {
+    this.staffs = [];
   }
 
-  // scan() {
-  //   this.selectedProduct = {};
-  //   this.barcodeScanner.scan().then((barcodeData) => {
-  //     this.selectedProduct = this.staffs.find(product => product.plu === barcodeData.text);
-  //     if(this.selectedProduct !== undefined) {
-  //       this.productFound = true;
-  //       console.log(this.selectedProduct);
-  //     } else {
-  //       this.selectedProduct = {};
-  //       this.productFound = false;
-  //       this.toast.show('Product not found', '5000', 'center').subscribe(
-  //         toast => {
-  //           console.log(toast);
-  //         }
-  //       );
-  //     }
-  //   }, (err) => {
-  //     this.toast.show(err, '5000', 'center').subscribe(
-  //       toast => {
-  //         console.log(toast);
-  //       }
-  //     );
-  //   });
-  // }
+  ngOnInit() {
+    this.getStaffList();
+  }
 
-  async scan(empno) {
+  getStaffList() {
+    this.apiService.getAll().subscribe((res) => {
+      this.staffs = res;
+      console.log(this.staffs);
+    });
+  }
+
+  async scan() {
     const loading = await this.loadingController.create({
       cssClass: "my-custom-class",
       message: "Please wait...",
@@ -74,13 +52,18 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
     this.barcodeScanner.scan().then(
       (barcodeData) => {
         this.empno = barcodeData.text;
-        this.router.navigate(["scan-product", this.empno]);
-        // this.selectedProduct = {};
-        // this.toast
-        //   .show("Product not found", "5000", "center")
-        //   .subscribe((toast) => {
-        //     console.log(toast);
-        //   });
+        this.selectedProduct = this.staffs.find((x) => x.empNo === this.empno);
+        if (this.selectedProduct !== undefined) {
+          console.log(this.selectedProduct);
+          this.router.navigate(["scan-product", this.empno]);
+        } else {
+          this.selectedProduct = {};
+          this.toast
+            .show("Staff not found", "5000", "center")
+            .subscribe((toast) => {
+              console.log(toast);
+            });
+        }
       },
       (err) => {
         this.toast.show(err, "5000", "center").subscribe((toast) => {
@@ -90,9 +73,9 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  jom(){
-    this.router.navigate(["scan-product", "70002"]);
-  }
+  // jom() {
+  //   this.router.navigate(["scan-product", "70002"]);
+  // }
 
   ngAfterViewInit() {
     this.backButtonSubscription = this.platform.backButton.subscribe(() => {

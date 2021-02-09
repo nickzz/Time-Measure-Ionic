@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Toast } from "@ionic-native/toast/ngx";
-import { LoadingController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 import { Scanning } from "src/app/models/scanning.model";
 import { Worker } from "src/app/models/staff.model";
 import { ApiService } from "./../../api.service";
@@ -18,76 +18,74 @@ export class ScanProductComponent implements OnInit {
   details: Worker = new Worker();
   product: Scanning;
 
-  constructor(private route: ActivatedRoute, 
-              private barcodeScanner: BarcodeScanner,
-              private toast: Toast,
-              public apiService: ApiService,
-              public loadingController: LoadingController) {
+  constructor(
+    private route: ActivatedRoute,
+    private barcodeScanner: BarcodeScanner,
+    private toast: Toast,
+    public alertCtrl: AlertController,
+    public apiService: ApiService,
+    public loadingController: LoadingController
+  ) {
+    this.product = new Scanning();
 
-                this.product = new Scanning();
+    this.empno = this.route.snapshot.paramMap.get("empNo");
+    console.log("ID", this.empno);
 
-                this.empno = this.route.snapshot.paramMap.get('empNo')
-                console.log("ID", this.empno);
-
-                this.apiService.getStaff(this.empno).subscribe(res => {
-                  this.details = res[0];
-                  console.log("res :", this.details);
-                })
-              }
+    this.getStaff();
+  }
 
   ngOnInit() {}
 
-  // async getStaffDetail() {
-  //   const loading = await this.loadingController.create({
-  //     cssClass: 'my-custom-class',
-  //     message: 'Please wait...',
-  //     duration: 2000
-  //   });
-  //   await loading.present();
-  //   console.log("empNo", this.empno);
-  //   await this.apiService.getStaff(this.empno)
-  //     .subscribe(res => {
-  //       this.details = res[0];
-  //       console.log("res :", this.details);
-  //       loading.dismiss();
-  //     }, err => {
-  //       console.log(err);
-  //       loading.dismiss();
-  //     });
-  // }
+  async getStaff() {
+    const loading = await this.loadingController.create({
+      cssClass: "my-custom-class",
+      message: "Please wait...",
+      duration: 2000,
+    });
+    await loading.present();
+    await this.apiService.getStaff(this.empno).subscribe(
+      (res) => {
+        this.details = res[0];
+        console.log("res :", this.details);
+        loading.dismiss();
+      },
+      (err) => {
+        console.log(err);
+        loading.dismiss();
+      }
+    );
+  }
 
   async scan() {
     const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-      duration: 2000
+      cssClass: "my-custom-class",
+      message: "Please wait...",
+      duration: 2000,
     });
     await loading.present();
     this.data = null;
-    this.barcodeScanner.scan().then((barcodeData) => {
-      this.data = barcodeData;
-      this.data.text = this.product.barcode;
-    }, (err) => {
-      this.toast.show(err, '5000', 'center').subscribe(
-        toast => {
+    this.barcodeScanner.scan().then(
+      (barcodeData) => {
+        this.data = barcodeData.text;
+        this.product.barcode = this.data;
+      },
+      (err) => {
+        this.toast.show(err, "5000", "center").subscribe((toast) => {
           console.log(toast);
-        }
-      );
-    });
-    
+        });
+      }
+    );
   }
 
-  submitForm() {
+  async submitForm() {
+    const alert = await this.alertCtrl.create({
+      cssClass: "alertSave",
+      message: "Data successfully saved.",
+      buttons: ["OK"],
+    });
+
     this.apiService.addProduct(this.product).subscribe((response) => {
-      this.toast.show('Barcode saved successfully', '5000', 'center')
-      // this.toast.show('Barcode saved successfully', '5000', 'center').subscribe(
-      //           toast => {
-      //             console.log(toast);
-      //           }
-      //         );
+      alert.present();
     });
-
   }
-
- 
 }

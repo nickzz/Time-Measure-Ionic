@@ -14,8 +14,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-card style="border: grey thick; border-radius: 6px">
-    <ion-card-header>
+  <ion-row style="justify-content: space-between;padding: 6px;">
+    <ion-button size="small" color="secondary" shape="round" [routerLink]="['/products']">
+      History
+    </ion-button>
+    <ion-button size="small" color="secondary" shape="round">{{ details.empName | slice:0:10 }}
+      <ion-icon slot="start" name="person"></ion-icon>
+    </ion-button>
+  </ion-row>
+  <!-- <ion-card-header>
       <ion-title style="text-align: center">Staff Information</ion-title>
     </ion-card-header>
     <ion-card-content>
@@ -25,8 +32,7 @@
       <ion-row>
         <ion-text>Staff Code : {{ details.empNo }}</ion-text>
       </ion-row>
-    </ion-card-content>
-  </ion-card>
+    </ion-card-content> -->
 
   <ion-grid>
     <ion-row style="padding-bottom: 14px; padding-top: 12px">
@@ -38,7 +44,6 @@
           Scan barcode
           <ion-icon name="scan-sharp" slot="start"></ion-icon>
         </ion-button>
-        <ion-button [routerLink]="['/products']"> Add Product </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -70,17 +75,21 @@
         </ion-select>
       </ion-item>
 
-      <ion-item style="justify-content: space-between;">
-        <!-- *ngIf="data" -->
+      <ion-item *ngIf="data" style="justify-content: space-between">
         <ion-label>Barcode </ion-label>
-        <ion-input [value]="data" [(ngModel)]="product.barcode"></ion-input>
+        <ion-input style="text-align: end;" [value]="data" [(ngModel)]="product.barcode"></ion-input>
       </ion-item>
 
       <ion-grid>
         <ion-row>
           <ion-col></ion-col>
           <ion-col size="6">
-            <ion-button color="primary" style="padding-top: 8px" expand="full" (click)="submitForm()">
+            <ion-button
+              color="primary"
+              style="padding-top: 8px"
+              expand="full"
+              (click)="submitForm()"
+            >
               Submit</ion-button
             >
           </ion-col>

@@ -15,7 +15,8 @@ export class ApiService {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
 
-  apiUrl = " http://localhost:80/api";
+  apiUrl = " http://192.168.43.223:8000/api";
+ 
 
   constructor(private http: HttpClient) {}
 
@@ -44,25 +45,11 @@ export class ApiService {
 
   //Staff
 
-  // getAll(): Observable<any> {
-  //   return this.http
-  //     .get(this.apiUrl + "/staffs", this.httpOptions)
-  //     .pipe(map(this.extractData), catchError(this.handleError));
-  // }
-
   getAll(): Observable<any> {
     return this.http
       .get(this.apiUrl + "/staffs", this.httpOptions)
       .pipe(catchError(this.handleError));
   }
-
-  // getStaff(empNo: string): Observable<any> {
-  //   const url = `${this.apiUrl}/check-staff/${empNo}`;
-  //   return this.http.get(url, this.httpOptions);
-  //   // .pipe(
-  //   //   map(this.extractData),
-  //   //   catchError(this.handleError));
-  // }
 
   getStaff(empNo:string): Observable<any> {
     const url = `${this.apiUrl}/check-staff/${empNo}`;
@@ -119,9 +106,9 @@ export class ApiService {
   // }
 
   addProduct(data): Observable<any> {
-    const url = `${this.apiUrl}/staff/scans`;
+    // const url = `${this.apiUrl} /staff/scan`;
     return this.http
-      .post(url, data, this.httpOptions)
+      .post(this.apiUrl + "/staff/scan", data, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 

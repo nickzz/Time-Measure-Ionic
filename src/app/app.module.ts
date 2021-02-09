@@ -8,7 +8,8 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
+import { HTTP } from '@ionic-native/http/ngx';
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { CommonModule } from "@angular/common";
 import { ScanStaffComponent } from "./barcode-page/scan-staff/scan-staff.component";
@@ -30,13 +31,14 @@ import { FormsModule } from "@angular/forms";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule,
     CommonModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    HTTP,
     BarcodeScanner,
     ApiService,
     Toast,

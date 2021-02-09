@@ -1,14 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title> Roland Time Measure </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="History" [icon]="add"> </ion-back-button>
+    </ion-buttons>
+    <ion-title> History </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-margin">
-  <ion-title style="font-family: Arial;font-size: 20px;padding-top: 10px;padding-bottom: 10px;"><strong>Product Scan List</strong></ion-title>
+  <ion-card style="background-color: rgb(155, 175, 212);">
+    <ion-text style="font-style: oblique;padding: 4px;">
+      <strong> View Product Barcode. </strong><br>Barcode scanning history allow the user to<br> view all previous barcode product that <br> scanned using this app.
+    </ion-text>
+  </ion-card>
+ 
   <ion-card *ngFor="let x of product">
     <ion-card-content>
-      <ion-row style="justify-content: space-between;">
+      <ion-row style="justify-content: space-between">
         <ion-text>Barcode: {{ x.BARCODE }}</ion-text>
         <ion-text>Station: {{ x.STATION }}</ion-text>
       </ion-row>
