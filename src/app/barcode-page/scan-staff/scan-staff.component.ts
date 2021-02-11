@@ -1,9 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  BarcodeScanner,
-  BarcodeScannerOptions,
-} from "@ionic-native/barcode-scanner/ngx";
+import { BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
 import { LoadingController, Platform } from "@ionic/angular";
 import { ApiService } from "./../../api.service";
 import { Toast } from "@ionic-native/toast/ngx";
@@ -74,7 +71,7 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   // jom() {
-  //   this.router.navigate(["scan-product", "70002"]);
+  //   this.router.navigate(["scan-product", "RJA456"]);
   // }
 
   ngAfterViewInit() {

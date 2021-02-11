@@ -34,7 +34,7 @@ export class ScanProductComponent implements OnInit {
     this.getStaff();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async getStaff() {
     const loading = await this.loadingController.create({
@@ -46,6 +46,7 @@ export class ScanProductComponent implements OnInit {
     await this.apiService.getStaff(this.empno).subscribe(
       (res) => {
         this.details = res[0];
+        this.product.empNo = this.details.empNo;
         console.log("res :", this.details);
         loading.dismiss();
       },
@@ -78,14 +79,30 @@ export class ScanProductComponent implements OnInit {
   }
 
   async submitForm() {
+    const loading = await this.loadingController.create({
+      cssClass: "my-custom-class",
+      message: "Please wait...",
+      duration: 2000,
+    });
     const alert = await this.alertCtrl.create({
       cssClass: "alertSave",
       message: "Data successfully saved.",
       buttons: ["OK"],
     });
 
+    await loading.present();
     this.apiService.addProduct(this.product).subscribe((response) => {
+      this.product.startTime = new Date();
+      console.log(this.product.startTime);
+      loading.dismiss();
       alert.present();
+      this.clear();
+      
     });
+  }
+
+  clear(){
+    this.product.barcode = null;
+    this.product.station = null;
   }
 }

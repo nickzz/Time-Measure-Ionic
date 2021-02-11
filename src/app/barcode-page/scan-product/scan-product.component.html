@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-row style="justify-content: space-between;padding: 6px;">
+  <ion-row style="justify-content: space-between;padding: 12px;">
     <ion-button size="small" color="secondary" shape="round" [routerLink]="['/products']">
       History
     </ion-button>
@@ -22,17 +22,6 @@
       <ion-icon slot="start" name="person"></ion-icon>
     </ion-button>
   </ion-row>
-  <!-- <ion-card-header>
-      <ion-title style="text-align: center">Staff Information</ion-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-row>
-        <ion-text>Staff Name : {{ details.empName }}</ion-text>
-      </ion-row>
-      <ion-row>
-        <ion-text>Staff Code : {{ details.empNo }}</ion-text>
-      </ion-row>
-    </ion-card-content> -->
 
   <ion-grid>
     <ion-row style="padding-bottom: 14px; padding-top: 12px">
@@ -52,8 +41,7 @@
     <ion-row style="padding-bottom: 10%">
       <ion-col style="text-align: center">
         <ion-title style="padding-bottom: 8px"
-          >Product Barcode Scanner</ion-title
-        >
+          >Product Barcode Scanner</ion-title>
         <ion-text
           >Click on button above to start scanning the product barcode.
         </ion-text>
@@ -77,21 +65,15 @@
 
       <ion-item *ngIf="data" style="justify-content: space-between">
         <ion-label>Barcode </ion-label>
-        <ion-input style="text-align: end;" [value]="data" [(ngModel)]="product.barcode"></ion-input>
+        <ion-input style="text-align: end;" [value]="data" [(ngModel)]="product.barcode" readonly></ion-input>
       </ion-item>
 
       <ion-grid>
         <ion-row>
           <ion-col></ion-col>
           <ion-col size="6">
-            <ion-button
-              color="primary"
-              style="padding-top: 8px"
-              expand="full"
-              (click)="submitForm()"
-            >
-              Submit</ion-button
-            >
+            <ion-button color="primary" style="padding-top: 8px" expand="full" (click)="submitForm()">
+              Submit</ion-button>
           </ion-col>
           <ion-col></ion-col>
         </ion-row>
