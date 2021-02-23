@@ -30,7 +30,6 @@ export class ViewProductComponent implements OnInit {
     await loading.present();
     await this.apiService.getProducts().subscribe(
       (res) => {
-        console.log(res);
         this.product = res;
         loading.dismiss();
       },

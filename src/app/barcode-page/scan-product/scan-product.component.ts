@@ -17,6 +17,11 @@ export class ScanProductComponent implements OnInit {
   empno = null;
   details: Worker = new Worker();
   product: Scanning;
+  startDate = new Date();
+  endDate = new Date();
+  isDisabled: boolean = true;
+  btnDisable: boolean = false;
+  rest: string = "REST";
 
   constructor(
     private route: ActivatedRoute,
@@ -29,12 +34,11 @@ export class ScanProductComponent implements OnInit {
     this.product = new Scanning();
 
     this.empno = this.route.snapshot.paramMap.get("empNo");
-    console.log("ID", this.empno);
-
-    this.getStaff();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.getStaff();
+  }
 
   async getStaff() {
     const loading = await this.loadingController.create({
@@ -47,7 +51,6 @@ export class ScanProductComponent implements OnInit {
       (res) => {
         this.details = res[0];
         this.product.empNo = this.details.empNo;
-        console.log("res :", this.details);
         loading.dismiss();
       },
       (err) => {
@@ -65,24 +68,22 @@ export class ScanProductComponent implements OnInit {
     });
     await loading.present();
     this.data = null;
-    this.barcodeScanner.scan().then(
-      (barcodeData) => {
+    this.barcodeScanner
+      .scan()
+      .then((barcodeData) => {
         this.data = barcodeData.text;
         this.product.barcode = this.data;
-      },
-      (err) => {
-        this.toast.show(err, "5000", "center").subscribe((toast) => {
-          console.log(toast);
-        });
-      }
-    );
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   }
 
   async submitForm() {
     const loading = await this.loadingController.create({
       cssClass: "my-custom-class",
       message: "Please wait...",
-      duration: 2000,
+      duration: 3000,
     });
     const alert = await this.alertCtrl.create({
       cssClass: "alertSave",
@@ -92,17 +93,74 @@ export class ScanProductComponent implements OnInit {
 
     await loading.present();
     this.apiService.addProduct(this.product).subscribe((response) => {
-      this.product.startTime = new Date();
-      console.log(this.product.startTime);
+      this.product.endTime = new Date();
+      console.log("Semua sekali ", this.product);
+
       loading.dismiss();
       alert.present();
       this.clear();
-      
     });
   }
 
-  clear(){
+  clear() {
     this.product.barcode = null;
     this.product.station = null;
+    this.btnDisable = false;
+    this.isDisabled = true;
+  }
+
+  isValid(): boolean {
+    return (
+      this.product.barcode != null &&
+      this.product.empNo != null &&
+      this.product.startTime != null &&
+      this.product.station != null
+    );
+  }
+
+  getStartDate() {
+    this.product.startTime = new Date();
+    console.log(this.product.startTime);
+    this.btnDisable = true;
+    this.isDisabled = false;
+    this.toast
+      .show("Barcode scanning has started.", "3000", "center")
+      .subscribe((toast) => {
+      });
+  }
+
+  getEndDate() {
+    this.product.endTime = new Date();
+    console.log(this.product.endTime);
+    this.toast
+      .show("Barcode scanning has ended.", "3000", "center")
+      .subscribe((toast) => {
+      });
+  }
+
+  getRestPeriod() {
+    if (
+      this.product.startRestTime == null &&
+      this.product.endRestTime == null
+    ) {
+      this.product.startRestTime = new Date();
+      this.rest = "CONTINUE";
+      this.isDisabled = true;
+      console.log(this.product.startRestTime);
+      this.toast
+        .show("Pause the process.", "3000", "center")
+        .subscribe((toast) => {
+          console.log(toast);
+        });
+    } else {
+      this.product.endRestTime = new Date();
+      this.rest = "REST";
+      this.isDisabled = false;
+      console.log(this.product.endRestTime);
+      this.toast
+        .show("Continue scanning.", "3000", "center")
+        .subscribe((toast) => {
+        });
+    }
   }
 }

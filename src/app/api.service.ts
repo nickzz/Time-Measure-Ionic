@@ -15,8 +15,8 @@ export class ApiService {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
 
-  // apiUrl = " http://192.168.43.223:8000/api";
-  apiUrl = " http://10.111.99.6:80/api";
+  apiUrl = " http://192.168.8.100:8000/api";
+  // apiUrl = " http://10.111.99.6:80/api";
 
  
 

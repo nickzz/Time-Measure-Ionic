@@ -3,7 +3,7 @@
     <ion-row>
       <ion-col>
         <ion-title style="color: white">
-          <strong>Roland Time Measure</strong>
+          <strong>Product Barcode Scanner</strong>
         </ion-title>
       </ion-col>
       <ion-col>
@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-row style="justify-content: space-between;padding: 12px;">
+  <ion-row style="justify-content: space-between;padding: 10px;">
     <ion-button size="small" color="secondary" shape="round" [routerLink]="['/products']">
       History
     </ion-button>
@@ -23,29 +23,34 @@
     </ion-button>
   </ion-row>
 
-  <ion-grid>
-    <ion-row style="padding-bottom: 14px; padding-top: 12px">
-      <ion-col>
-        <img style="border-radius: 8px" src="assets/scan1.png" />
-      </ion-col>
-      <ion-col>
-        <ion-button color="success" expand="block" (click)="scan()">
-          Scan barcode
-          <ion-icon name="scan-sharp" slot="start"></ion-icon>
-        </ion-button>
-      </ion-col>
+  <ion-card style="background-color: rgb(207, 215, 230)">
+    <ion-row style="padding: 8px">
+      <ion-text style="font-style: oblique">
+        <strong>** Instructions **</strong><br /><br />* Press Start button to enable barcode scanning.<br />
+        * Press End button to end the process.<br>
+        * Press Rest button to pause.
+      </ion-text>
+    </ion-row>
+  </ion-card>
+
+  <ion-grid style="padding-top: 12px;">
+    <ion-row style="justify-content: space-evenly;">
+      <ion-button color="primary" (click)="getStartDate()" [disabled]="btnDisable">
+        Start
+      </ion-button>
+      <ion-button color="warning" (click) = "getRestPeriod()">
+        {{rest}}
+      </ion-button>
     </ion-row>
   </ion-grid>
 
   <ion-grid>
-    <ion-row style="padding-bottom: 10%">
-      <ion-col style="text-align: center">
-        <ion-title style="padding-bottom: 8px"
-          >Product Barcode Scanner</ion-title>
-        <ion-text
-          >Click on button above to start scanning the product barcode.
-        </ion-text>
-      </ion-col>
+    <ion-row style="padding-bottom: 10px; padding-top: 20px">
+        <img style="width: 40%;height: 50%;" src="assets/scan1.png" />
+        <ion-button color="success" expand="block" (click)="scan()" [disabled]="isDisabled">
+          Scan barcode
+          <ion-icon name="scan-sharp" slot="start"></ion-icon>
+        </ion-button>
     </ion-row>
   </ion-grid>
 
@@ -72,7 +77,7 @@
         <ion-row>
           <ion-col></ion-col>
           <ion-col size="6">
-            <ion-button color="primary" style="padding-top: 8px" expand="full" (click)="submitForm()">
+            <ion-button color="tertiary" style="padding-top: 8px" expand="full" (click)="submitForm()" [disabled]='!isValid()'>
               Submit</ion-button>
           </ion-col>
           <ion-col></ion-col>

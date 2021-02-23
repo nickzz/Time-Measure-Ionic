@@ -61,18 +61,10 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
               console.log(toast);
             });
         }
-      },
-      (err) => {
-        this.toast.show(err, "5000", "center").subscribe((toast) => {
-          console.log(toast);
-        });
-      }
-    );
+      }).catch(err => {
+        console.log('Error', err);
+    });
   }
-
-  // jom() {
-  //   this.router.navigate(["scan-product", "RJA456"]);
-  // }
 
   ngAfterViewInit() {
     this.backButtonSubscription = this.platform.backButton.subscribe(() => {

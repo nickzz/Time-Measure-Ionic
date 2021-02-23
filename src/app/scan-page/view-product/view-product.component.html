@@ -10,24 +10,25 @@
 <ion-content class="ion-margin">
   <ion-card style="background-color: rgb(207, 215, 230)">
     <ion-row style="padding: 8px">
-      <ion-text style="font-style: oblique">
+      <ion-text style="font-style: oblique;font-size: 13px;">
         <strong>View Product Barcode. </strong><br /><br />Barcode scanning
-        history allow the user to view<br />
-        all previous barcode product that <br />
-        scanned using this app.
+        history allow the user to view all previous
+        barcode product that scanned using this app.
       </ion-text>
     </ion-row>
   </ion-card>
 
-  <ion-card *ngFor="let x of product" style="padding-top: 12px;border-radius: 12px;">
+  <ion-card *ngFor="let x of product">
     <ion-card-content>
       <ion-row style="justify-content: space-between;">
         <ion-text>Staff No : <strong>{{ x.EMP_NO }}</strong></ion-text>
         <ion-text>Station : <strong>{{ x.STATION }}</strong></ion-text>
       </ion-row>
       <ion-row>
-        <ion-text>Barcode product <strong>{{ x.BARCODE }}</strong><br> has been scanned at
-          <strong>{{x.START_TIME | date: 'dd/MM/yyyy h:mm a'}}</strong></ion-text>
+        <ion-text>Barcode product <strong>{{ x.BARCODE }}</strong><br> Started at
+          <strong>{{x.START_TIME | date: 'dd/MM/yyyy h:mm:ss a'}}</strong><br> Ended at
+          <strong>{{x.END_TIME | date: 'dd/MM/yyyy h:mm:ss a'}}</strong>
+        </ion-text>
       </ion-row>
     </ion-card-content>
   </ion-card>
