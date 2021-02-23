@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { BarcodeScanner} from "@ionic-native/barcode-scanner/ngx";
-import { LoadingController, Platform } from "@ionic/angular";
+import { LoadingController, Platform, ToastController } from "@ionic/angular";
 import { ApiService } from "./../../api.service";
-import { Toast } from "@ionic-native/toast/ngx";
 
 @Component({
   selector: "app-scan-staff",
@@ -20,7 +19,7 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
     private barcodeScanner: BarcodeScanner,
     private router: Router,
     private platform: Platform,
-    private toast: Toast,
+    private toastCtrl: ToastController,
     private apiService: ApiService,
     public loadingController: LoadingController
   ) {
@@ -34,7 +33,6 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
   getStaffList() {
     this.apiService.getAll().subscribe((res) => {
       this.staffs = res;
-      console.log(this.staffs);
     });
   }
 
@@ -44,6 +42,12 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
       message: "Please wait...",
       duration: 2000,
     });
+    const toast = await this.toastCtrl.create({
+      message: 'Id staff not found',
+      duration: 3000,
+      position: 'bottom'
+    });
+    
     await loading.present();
     this.selectedProduct = {};
     this.barcodeScanner.scan().then(
@@ -53,13 +57,10 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.selectedProduct !== undefined) {
           console.log(this.selectedProduct);
           this.router.navigate(["scan-product", this.empno]);
-        } else {
-          this.selectedProduct = {};
-          this.toast
-            .show("Staff not found", "5000", "center")
-            .subscribe((toast) => {
-              console.log(toast);
-            });
+        } 
+        else 
+        {
+          toast.present();
         }
       }).catch(err => {
         console.log('Error', err);
