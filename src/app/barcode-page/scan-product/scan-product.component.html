@@ -1,21 +1,16 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-row>
-      <ion-col>
         <ion-title style="color: white">
           <strong>Product Barcode Scanner</strong>
         </ion-title>
-      </ion-col>
-      <ion-col>
-        <ion-icon name="person" slot="start"></ion-icon>
-      </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-row style="justify-content: space-between;padding: 10px;">
-    <ion-button size="small" color="secondary" shape="round" [routerLink]="['/products']">
+    <ion-button size="small" color="secondary" shape="round" (click)="history()">
       History
     </ion-button>
     <ion-button size="small" color="secondary" shape="round">{{ details.empName | slice:0:10 }}
@@ -27,8 +22,7 @@
     <ion-row style="padding: 8px">
       <ion-text style="font-style: oblique">
         <strong>** Instructions **</strong><br /><br />* Press Start button to enable barcode scanning.<br />
-        * Press End button to end the process.<br>
-        * Press Rest button to pause.
+        * Press Rest button to pause and press again to continue.<br>
       </ion-text>
     </ion-row>
   </ion-card>

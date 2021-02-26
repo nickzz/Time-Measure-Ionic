@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { Toast } from "@ionic-native/toast/ngx";
-import { AlertController, LoadingController } from "@ionic/angular";
+import { LoadingController, ToastController } from "@ionic/angular";
 import { Scanning } from "src/app/models/scanning.model";
 import { Worker } from "src/app/models/staff.model";
 import { ApiService } from "./../../api.service";
@@ -25,9 +25,10 @@ export class ScanProductComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private barcodeScanner: BarcodeScanner,
     private toast: Toast,
-    public alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     public apiService: ApiService,
     public loadingController: LoadingController
   ) {
@@ -51,11 +52,9 @@ export class ScanProductComponent implements OnInit {
       (res) => {
         this.details = res[0];
         this.product.empNo = this.details.empNo;
-        loading.dismiss();
       },
       (err) => {
         console.log(err);
-        loading.dismiss();
       }
     );
   }
@@ -85,29 +84,26 @@ export class ScanProductComponent implements OnInit {
       message: "Please wait...",
       duration: 3000,
     });
-    const alert = await this.alertCtrl.create({
-      cssClass: "alertSave",
-      message: "Data successfully saved.",
-      buttons: ["OK"],
+    const toast = await this.toastCtrl.create({
+      message: 'Data successfully saved',
+      duration: 3000,
+      position: 'bottom'
     });
 
     await loading.present();
     this.apiService.addProduct(this.product).subscribe((response) => {
       this.product.endTime = new Date();
-      console.log("Semua sekali ", this.product);
-
-      loading.dismiss();
-      alert.present();
-      this.clear();
+      toast.present();
+      this.product.barcode = null;
+      this.product.station = null;
+      this.btnDisable = false;
+      this.isDisabled = true;
     });
   }
 
-  clear() {
-    this.product.barcode = null;
-    this.product.station = null;
-    this.btnDisable = false;
-    this.isDisabled = true;
-  }
+ history(){
+    this.router.navigate(["products", this.empno]);
+ }
 
   isValid(): boolean {
     return (
@@ -125,8 +121,7 @@ export class ScanProductComponent implements OnInit {
     this.isDisabled = false;
     this.toast
       .show("Barcode scanning has started.", "3000", "center")
-      .subscribe((toast) => {
-      });
+      .subscribe((toast) => {});
   }
 
   getEndDate() {
@@ -134,8 +129,7 @@ export class ScanProductComponent implements OnInit {
     console.log(this.product.endTime);
     this.toast
       .show("Barcode scanning has ended.", "3000", "center")
-      .subscribe((toast) => {
-      });
+      .subscribe((toast) => {});
   }
 
   getRestPeriod() {
@@ -159,8 +153,7 @@ export class ScanProductComponent implements OnInit {
       console.log(this.product.endRestTime);
       this.toast
         .show("Continue scanning.", "3000", "center")
-        .subscribe((toast) => {
-        });
+        .subscribe((toast) => {});
     }
   }
 }

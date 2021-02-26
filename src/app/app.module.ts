@@ -18,6 +18,7 @@ import { Toast } from "@ionic-native/toast/ngx";
 import { ScanProductComponent } from "./barcode-page/scan-product/scan-product.component";
 import { ViewProductComponent } from "./scan-page/view-product/view-product.component";
 import { FormsModule } from "@angular/forms";
+import { DetailProductComponent } from "./scan-page/detail-product/detail-product.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule } from "@angular/forms";
     ScanStaffComponent,
     ScanProductComponent,
     ViewProductComponent,
+    DetailProductComponent,
   ],
   entryComponents: [],
   imports: [

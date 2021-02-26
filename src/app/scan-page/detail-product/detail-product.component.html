@@ -1,0 +1,49 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title><strong>Product Detail</strong></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Employee No :</ion-col>
+      <ion-col><strong>{{ product.EMP_NO }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Line Name :</ion-col>
+      <ion-col><strong>{{ product.LINE_NAME }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Barcode :</ion-col>
+      <ion-col><strong>{{ product.BARCODE }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Station :</ion-col>
+      <ion-col><strong>{{ product.STATION }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Model :</ion-col>
+      <ion-col><strong>{{ product.MODEL }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Start Time :</ion-col>
+      <ion-col><strong>{{ product.START_TIME | date: "dd/MM/yyyy h:mm:ss a" }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>End Time:</ion-col>
+      <ion-col><strong>{{ product.END_TIME | date: "dd/MM/yyyy h:mm:ss a" }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Start Rest Time :</ion-col>
+      <ion-col><strong>{{ product.START_REST_TIME | date: "dd/MM/yyyy h:mm:ss a" }}</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>End Rest Time :</ion-col>
+      <ion-col><strong>{{ product.END_REST_TIME | date: "dd/MM/yyyy h:mm:ss a" }}</strong></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

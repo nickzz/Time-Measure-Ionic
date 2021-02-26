@@ -43,7 +43,7 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
       duration: 2000,
     });
     const toast = await this.toastCtrl.create({
-      message: 'Id staff not found',
+      message: 'Staff Id not found',
       duration: 3000,
       position: 'bottom'
     });

@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { LoadingController } from "@ionic/angular";
+import { ActivatedRoute } from "@angular/router";
+import { LoadingController, ModalController } from "@ionic/angular";
 import { ApiService } from "src/app/api.service";
+import { Scanning } from "src/app/models/scanning.model";
+import { DetailProductComponent } from "../detail-product/detail-product.component";
 
 @Component({
   selector: "app-view-product",
@@ -9,12 +12,17 @@ import { ApiService } from "src/app/api.service";
 })
 export class ViewProductComponent implements OnInit {
   product: any;
+  empno = null;
 
   constructor(
     private apiService: ApiService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public modalController: ModalController,
+    private route: ActivatedRoute,
   ) {
     this.product = [];
+    this.empno = this.route.snapshot.paramMap.get("empNo");
+    console.log(this.empno)
   }
 
   ngOnInit() {
@@ -25,12 +33,12 @@ export class ViewProductComponent implements OnInit {
     const loading = await this.loadingController.create({
       cssClass: "my-custom-class",
       message: "Please wait...",
-      duration: 2000,
     });
     await loading.present();
-    await this.apiService.getProducts().subscribe(
+    await this.apiService.getProducts(this.empno).subscribe(
       (res) => {
         this.product = res;
+        console.log(this.product)
         loading.dismiss();
       },
       (err) => {
@@ -38,5 +46,16 @@ export class ViewProductComponent implements OnInit {
         loading.dismiss();
       }
     );
+  }
+
+  async onRowSelected(x: Scanning){
+    const modal = await this.modalController.create({
+      component: DetailProductComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        'data': x
+      }
+    });
+    return await modal.present();
   }
 }

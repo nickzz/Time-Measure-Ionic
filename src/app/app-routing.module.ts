@@ -7,7 +7,7 @@ import { ViewProductComponent } from "./scan-page/view-product/view-product.comp
 const routes: Routes = [
   { path: "scan-staff", component: ScanStaffComponent },
   { path: "scan-product/:empNo", component: ScanProductComponent },
-  { path: "products", component: ViewProductComponent },
+  { path: "products/:empNo", component: ViewProductComponent },
   {
     path: "home",
     loadChildren: "./home/home.module#HomePageModule",
