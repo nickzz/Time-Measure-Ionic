@@ -15,8 +15,8 @@ export class ApiService {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
 
-  apiUrl = " http://192.168.8.100:8000/api";
-  // apiUrl = " http://10.111.99.6:80/api";
+  // apiUrl = " http://192.168.8.101:8000/api";
+  apiUrl = " http://10.111.99.6:80/api";
 
  
 
@@ -59,39 +59,11 @@ export class ApiService {
       .get<any>(url, this.httpOptions);
   }
 
-  // createStaff(data): Observable<any> {
-  //   const url = `${this.apiUrl}/add_with_staff`;
-  //   return this.http
-  //     .post(url, data, this.httpOptions)
-  //     .pipe(catchError(this.handleError));
-  // }
-
-  // updateStaff(empNo: string, data): Observable<any> {
-  //   const url = `${this.apiUrl}/${empNo}`;
-  //   return this.http
-  //     .put(url, data, this.httpOptions)
-  //     .pipe(catchError(this.handleError));
-  // }
-
-  // deleteStaff(empNo: string): Observable<{}> {
-  //   const url = `${this.apiUrl}/${empNo}`;
-  //   return this.http
-  //     .delete(url, this.httpOptions)
-  //     .pipe(catchError(this.handleError));
-  // }
-
   addProduct(data): Observable<any> {
     return this.http
       .post(this.apiUrl + "/scans", data, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
-
-  // getProducts(empNo:string): Observable<any> {
-  //   // const url = `${this.apiUrl}/scans/${empNo}`;
-  //   return this.http
-  //     .get(this.apiUrl + "/scans/" + empNo, this.httpOptions);
-  //     // .pipe(catchError(this.handleError));
-  // }
 
   getProducts(empNo:string): Observable<any> {
     const url = `${this.apiUrl}/scans/${empNo}`;

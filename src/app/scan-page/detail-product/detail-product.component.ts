@@ -15,7 +15,6 @@ export class DetailProductComponent implements OnInit {
     public modalController: ModalController
   ) {
     this.product = this.navParams.get("data");
-    console.log(this.product);
   }
 
   ngOnInit() {}

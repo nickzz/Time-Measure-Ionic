@@ -55,7 +55,6 @@ export class ScanStaffComponent implements OnInit, OnDestroy, AfterViewInit {
         this.empno = barcodeData.text;
         this.selectedProduct = this.staffs.find((x) => x.empNo === this.empno);
         if (this.selectedProduct !== undefined) {
-          console.log(this.selectedProduct);
           this.router.navigate(["scan-product", this.empno]);
         } 
         else 

@@ -22,7 +22,6 @@ export class ViewProductComponent implements OnInit {
   ) {
     this.product = [];
     this.empno = this.route.snapshot.paramMap.get("empNo");
-    console.log(this.empno)
   }
 
   ngOnInit() {
@@ -38,7 +37,6 @@ export class ViewProductComponent implements OnInit {
     await this.apiService.getProducts(this.empno).subscribe(
       (res) => {
         this.product = res;
-        console.log(this.product)
         loading.dismiss();
       },
       (err) => {

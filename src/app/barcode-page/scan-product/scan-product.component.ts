@@ -116,7 +116,6 @@ export class ScanProductComponent implements OnInit {
 
   getStartDate() {
     this.product.startTime = new Date();
-    console.log(this.product.startTime);
     this.btnDisable = true;
     this.isDisabled = false;
     this.toast
@@ -126,7 +125,6 @@ export class ScanProductComponent implements OnInit {
 
   getEndDate() {
     this.product.endTime = new Date();
-    console.log(this.product.endTime);
     this.toast
       .show("Barcode scanning has ended.", "3000", "center")
       .subscribe((toast) => {});
@@ -140,7 +138,6 @@ export class ScanProductComponent implements OnInit {
       this.product.startRestTime = new Date();
       this.rest = "CONTINUE";
       this.isDisabled = true;
-      console.log(this.product.startRestTime);
       this.toast
         .show("Pause the process.", "3000", "center")
         .subscribe((toast) => {
@@ -150,7 +147,6 @@ export class ScanProductComponent implements OnInit {
       this.product.endRestTime = new Date();
       this.rest = "REST";
       this.isDisabled = false;
-      console.log(this.product.endRestTime);
       this.toast
         .show("Continue scanning.", "3000", "center")
         .subscribe((toast) => {});
